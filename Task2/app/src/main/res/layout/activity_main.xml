@@ -16,4 +16,17 @@
         android:textSize="48sp"
         android:textStyle="bold"
         android:translationY="500dp" />
+
+    <Button
+        android:id="@+id/stateButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+    <TextView
+        android:id="@+id/stateView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
 </LinearLayout>
