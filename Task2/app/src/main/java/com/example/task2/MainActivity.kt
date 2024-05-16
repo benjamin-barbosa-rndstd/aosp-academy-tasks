@@ -13,9 +13,9 @@ import kotlinx.coroutines.launch
 
 /* Extra imports */
 import android.widget.TextView
-import android.os.Handler
 import android.widget.Button
-
+import android.os.Handler
+import android.content.Intent
 
 class MainActivity : ComponentActivity() {
     /* Time variables */
@@ -25,7 +25,6 @@ class MainActivity : ComponentActivity() {
 
     /* To manage layouts */
     private lateinit var foregroundTimeTextView: TextView
-
 
     private val handler = Handler()
 
@@ -55,7 +54,8 @@ class MainActivity : ComponentActivity() {
         val stateButton: Button = findViewById(R.id.stateButton)
         stateButton.setOnClickListener {
             stateView.text = "Button clicked"
-            finish()
+            val intent = Intent(this@MainActivity, SecondActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -81,6 +81,7 @@ class MainActivity : ComponentActivity() {
         super.onPause()
         val stateView: TextView = findViewById(R.id.stateView)
         stateView.text = "onPause"
+        handler.removeCallbacks(updateTimeTask)
     }
 
     /* In Background? */
@@ -88,8 +89,6 @@ class MainActivity : ComponentActivity() {
         super.onStop()
         val stateView: TextView = findViewById(R.id.stateView)
         stateView.text = "onPause"
-
-        handler.removeCallbacks(updateTimeTask)
     }
 
     /*  */
