@@ -9,24 +9,23 @@
         android:id="@+id/foregroundTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextViewTEST!!!"
-        android:textAlignment="center"
+        android:text="Foreground Time"
+        android:textAlignment="textStart"
         android:textAllCaps="false"
-        android:textColor="#DA8181"
-        android:textSize="48sp"
+        android:textColor="#009688"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:translationY="500dp" />
-
-    <Button
-        android:id="@+id/stateButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+        android:translationY="400dp" />
 
     <TextView
-        android:id="@+id/stateView"
+        android:id="@+id/backgroundTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="Background Time"
+        android:textAlignment="textStart"
+        android:textColorLink="#F44336"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:translationY="200dp" />
 
 </LinearLayout>
