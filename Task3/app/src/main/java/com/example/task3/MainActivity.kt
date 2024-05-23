@@ -22,31 +22,14 @@ import android.content.IntentFilter
 
 class MainActivity : ComponentActivity() {
 
-    private lateinit var uptimeTextView: TextView
-    private val uptimeReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val uptime = intent?.getLongExtra("uptime", 0)
-            uptimeTextView.text = "System Uptime: $uptime seconds"
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        uptimeTextView = findViewById(R.id.uptimeTextView)
-
-        // Register the receiver to get uptime updates
-        registerReceiver(uptimeReceiver, IntentFilter("com.example.uptimeservice.UPTIME"))
-
-        // Start the uptime service
-        val serviceIntent = Intent(this, UptimeService::class.java)
-        startService(serviceIntent)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        unregisterReceiver(uptimeReceiver)
+        /* Start the UptimeService */
+        val intent = Intent(this, UptimeService::class.java)
+        startService(intent)
     }
 }
 
