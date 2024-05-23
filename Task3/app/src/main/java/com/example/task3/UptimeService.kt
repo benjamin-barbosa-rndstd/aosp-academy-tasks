@@ -18,7 +18,7 @@ class UptimeService : Service() {
         val uptimeMinutes = uptimeSeconds / 60
         val uptimeHours = uptimeMinutes / 60
 
-        Log.d("UptimeService", "System has been up for: $uptimeHours hours, ${uptimeMinutes % 60} minutes, ${uptimeSeconds % 60} seconds")
+        Log.d("UptimeService", "[@@@] System has been up for: $uptimeHours hours, ${uptimeMinutes % 60} minutes, ${uptimeSeconds % 60} seconds")
 
         stopSelf()
         return START_NOT_STICKY
