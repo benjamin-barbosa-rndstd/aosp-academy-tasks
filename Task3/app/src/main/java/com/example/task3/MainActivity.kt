@@ -22,6 +22,7 @@ import android.content.ServiceConnection
 import android.os.IBinder
 import android.os.RemoteException
 import com.example.task3.ISystemUptimeService
+import android.util.Log
 
 
 
@@ -67,8 +68,9 @@ class MainActivity : ComponentActivity() {
         if (isBound) {
             try {
                 val uptime = uptimeService?.uptime ?: 0L
-                val uptimeView: TextView = findViewById(R.id.uptimeTextView)
-                uptimeView.text = "System Uptime: $uptime ms"
+                Log.d("DEBUG","The system uptime is: $uptime")
+//                val uptimeView: TextView = findViewById(R.id.uptimeTextView)
+//                uptimeView.text = "The system uptime is: $uptime"
             } catch (e: RemoteException) {
                 e.printStackTrace()
             }
