@@ -13,24 +13,66 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.task3.ui.theme.Task3Theme
 import android.content.BroadcastReceiver
+import android.content.ComponentName
 import android.widget.TextView
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.ServiceConnection
+import android.os.IBinder
+import android.os.RemoteException
+import com.example.task3.ISystemUptimeService
 
 
 
 class MainActivity : ComponentActivity() {
 
+    private var uptimeService : ISystemUptimeService? = null
+    private var isBound = false
 
+    /* Service Connection */
+    private val connection = object : ServiceConnection {
+
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            uptimeService = ISystemUptimeService.Stub.asInterface(service)
+            isBound = true
+            updateUptime()
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            uptimeService = null
+            isBound = false
+        }
+    }
+    /* onCreate */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /* Start the UptimeService */
+        /* bind to the UptimeService */
         val intent = Intent(this, UptimeService::class.java)
-        startService(intent)
+        bindService(intent, connection, Context.BIND_AUTO_CREATE)
     }
+
+    /* onDestroy */
+    override fun onDestroy() {
+        super.onDestroy()
+        if(isBound) {
+            unbindService(connection)
+            isBound  = false
+        }
+    }
+
+    private fun updateUptime() {
+        if (isBound) {
+            try {
+                val uptime = uptimeService?.uptime ?: 0L
+            } catch (e: RemoteException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
 }
 
 
