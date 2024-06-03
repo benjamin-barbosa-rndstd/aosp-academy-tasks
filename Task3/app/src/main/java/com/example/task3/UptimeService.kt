@@ -1,26 +1,25 @@
 package com.example.task3
 
 import android.app.Service
+import android.app.admin.DevicePolicyManager.InstallSystemUpdateCallback
 import android.content.Intent
 import android.os.IBinder
 import android.os.SystemClock
 import android.util.Log
+import com.example.task3.ISystemUptimeService
 
 class UptimeService : Service() {
 
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
+    /* Implementation of the AIDL interface */
+    private val binder = UptimeBinder()
+
+    inner class UptimeBinder : ISystemUptimeService.Stub() {
+        override fun getUptime() : Long {
+            return SystemClock.elapsedRealtime()
+        }
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val uptimeMillis = SystemClock.uptimeMillis()
-        val uptimeSeconds = uptimeMillis / 1000
-        val uptimeMinutes = uptimeSeconds / 60
-        val uptimeHours = uptimeMinutes / 60
-
-        Log.d("UptimeService", "[@@@] System has been up for: $uptimeHours hours, ${uptimeMinutes % 60} minutes, ${uptimeSeconds % 60} seconds")
-
-        stopSelf()
-        return START_NOT_STICKY
+    override fun onBind(intent: Intent?): IBinder? {
+        return binder
     }
 }
