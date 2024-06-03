@@ -67,6 +67,8 @@ class MainActivity : ComponentActivity() {
         if (isBound) {
             try {
                 val uptime = uptimeService?.uptime ?: 0L
+                val uptimeView: TextView = findViewById(R.id.uptimeTextView)
+                uptimeView.text = "System Uptime: $uptime ms"
             } catch (e: RemoteException) {
                 e.printStackTrace()
             }
