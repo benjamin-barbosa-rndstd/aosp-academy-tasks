@@ -69,8 +69,8 @@ class MainActivity : ComponentActivity() {
             try {
                 val uptime = uptimeService?.uptime ?: 0L
                 Log.d("DEBUG","The system uptime is: $uptime")
-//                val uptimeView: TextView = findViewById(R.id.uptimeTextView)
-//                uptimeView.text = "The system uptime is: $uptime"
+                val uptimeView: TextView = findViewById(R.id.uptimeTextView)
+                uptimeView.text = "The system uptime is: $uptime"
             } catch (e: RemoteException) {
                 e.printStackTrace()
             }
