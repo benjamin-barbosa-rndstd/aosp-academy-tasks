@@ -29,20 +29,17 @@ import android.util.Log
 class MainActivity : ComponentActivity() {
 
     private var uptimeService : ISystemUptimeService? = null
-    private var isBound = false
 
     /* Service Connection */
     private val connection = object : ServiceConnection {
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             uptimeService = ISystemUptimeService.Stub.asInterface(service)
-            isBound = true
             updateUptime()
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
             uptimeService = null
-            isBound = false
         }
     }
     /* onCreate */
@@ -58,14 +55,14 @@ class MainActivity : ComponentActivity() {
     /* onDestroy */
     override fun onDestroy() {
         super.onDestroy()
-        if(isBound) {
+        if(uptimeService != null) {
             unbindService(connection)
-            isBound  = false
+            uptimeService = null
         }
     }
 
     private fun updateUptime() {
-        if (isBound) {
+        uptimeService?.let {
             try {
                 val uptime = uptimeService?.uptime ?: 0L
                 Log.d("DEBUG","The system uptime is: ${formatElapsedTime(uptime)}")
