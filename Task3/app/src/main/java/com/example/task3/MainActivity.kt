@@ -68,14 +68,23 @@ class MainActivity : ComponentActivity() {
         if (isBound) {
             try {
                 val uptime = uptimeService?.uptime ?: 0L
-                Log.d("DEBUG","The system uptime is: $uptime")
+                Log.d("DEBUG","The system uptime is: ${formatElapsedTime(uptime)}")
                 val uptimeView: TextView = findViewById(R.id.uptimeTextView)
-                uptimeView.text = "The system uptime is: $uptime"
+                uptimeView.text = "The system uptime is: ${formatElapsedTime(uptime)}"
             } catch (e: RemoteException) {
                 e.printStackTrace()
             }
         }
     }
+
+    private fun formatElapsedTime(elapsedTimeMillis: Long): String {
+        val elapsedSeconds = elapsedTimeMillis / 1000
+        val elapsedMinutes = elapsedSeconds / 60
+        val seconds = elapsedSeconds % 60
+        val milliseconds = elapsedTimeMillis % 1000
+        return String.format("%02d:%02d:%03d", elapsedMinutes, seconds, milliseconds)
+    }
+
 
 }
 
